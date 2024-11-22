@@ -111,4 +111,5 @@ class UsuarioController extends Controller
         // Devolver el ID del usuario en la respuesta
         return response()->json(201);
     }
+    
 }
