@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\EspecieController;
+use App\Http\Controllers\RegistroController;
+use App\Http\Controllers\UsuarioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +20,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('/usuarios',UsuarioController::class);
+Route::apiResource('/especies', EspecieController::class);
+Route::apiResource('/registros', RegistroController::class);
+
+Route::post('/usuarios/login', [UsuarioController::class, 'login']);
+Route::post('/usuarios/logout', [UsuarioController::class, 'logout']);

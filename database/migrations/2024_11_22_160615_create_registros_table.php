@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('foto')->nullable();
             $table->string('codigo')->nullable();
             $table->text('descripcionRegistro')->nullable();
-            $table->string('descripcionLaboratorio')->nullable();
+            $table->text('descripcionLaboratorio')->nullable();
             $table->boolean('resultado')->nullable();
 
             $table->unsignedBigInteger('especie_id');

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('vectors', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('descripcion')->nullable();
+            $table->text('descripcion')->nullable();
             $table->timestamps();
         });
     }
