@@ -59,7 +59,7 @@ class UsuarioController extends Controller
     {
         $numUsuariosExistentes = Usuario::where('rol_id', $request->rol)
             ->count();
-
+        $usuariosArray = [];
         for ($i = $numUsuariosExistentes + 1; $i <= $numUsuariosExistentes + $request->numUsuarios; $i++) {
             if ($request->rol == 2) {
                 $nombre = "REG-" . str_pad($i, 5, '0', STR_PAD_LEFT);;
@@ -68,6 +68,10 @@ class UsuarioController extends Controller
             }
             $password = Str::random(8);
 
+            $usuariosArray[] = [
+                'nombre' => $nombre,
+                'password' => $password
+            ];
 
             // Crear el usuario
             Usuario::create([
@@ -78,7 +82,7 @@ class UsuarioController extends Controller
             ]);
         }
         // Devolver el ID del usuario en la respuesta
-        return response()->json(['message' => 'Usuarios registrados correctamente'], 201);
+        return response()->json(['usuarios' => $usuariosArray,'message' => 'Usuarios registrados correctamente'], 201);
     }
     public function update(Request $request)
     {
