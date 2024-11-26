@@ -6,6 +6,7 @@ use App\Http\Controllers\UsuarioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,3 +28,9 @@ Route::apiResource('/registros', RegistroController::class);
 
 Route::post('/usuarios/login', [UsuarioController::class, 'login']);
 Route::post('/usuarios/logout', [UsuarioController::class, 'logout']);
+Route::get('/registros/codigo/{codigo}', [RegistroController::class, 'getByCodigo']);
+Route::put('/registros/codigo/{codigo}', [RegistroController::class, 'update']);
+Route::post('/login', [UsuarioController::class, 'login']);
+Route::post('/logout', [UsuarioController::class, 'logout']);
+
+

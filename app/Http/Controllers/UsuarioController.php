@@ -57,33 +57,55 @@ class UsuarioController extends Controller
     }
     public function store(Request $request)
     {
-        $numUsuariosExistentes = Usuario::where('rol_id', $request->rol)
-            ->count();
-        $usuariosArray = [];
+        $numUsuariosExistentes = Usuario::where('rol_id', $request->rol)->count();
+
+        // Array para almacenar los usuarios y contraseñas antes de encriptar
+        $usuariosData = [];
+
         for ($i = $numUsuariosExistentes + 1; $i <= $numUsuariosExistentes + $request->numUsuarios; $i++) {
             if ($request->rol == 2) {
-                $nombre = "REG-" . str_pad($i, 5, '0', STR_PAD_LEFT);;
+                $nombre = "REG-" . str_pad($i, 5, '0', STR_PAD_LEFT);
             } else {
-                $nombre = "LAB-" . str_pad($i, 5, '0', STR_PAD_LEFT);;
+                $nombre = "LAB-" . str_pad($i, 5, '0', STR_PAD_LEFT);
             }
+
             $password = Str::random(8);
 
-            $usuariosArray[] = [
+            // Añadir los datos del usuario al array para el frontend
+            $usuariosData[] = [
                 'nombre' => $nombre,
                 'password' => $password
             ];
 
-            // Crear el usuario
+            // Crear el usuario en la base de datos con la contraseña encriptada
             Usuario::create([
                 'nombre' => $nombre,
                 'password' => Hash::make($password), // Encriptar la contraseña
-                // 'estado' => $validatedData['estado'],
                 'rol_id' => $request->rol,
             ]);
         }
-        // Devolver el ID del usuario en la respuesta
-        return response()->json(['usuarios' => $usuariosArray,'message' => 'Usuarios registrados correctamente'], 201);
+
+        // Devolver el array con usuarios y contraseñas al frontend
+        return response()->json([
+            'message' => 'Usuarios registrados correctamente',
+            'usuarios' => $usuariosData
+        ], 201);
     }
+
+    public function show($id)
+    {
+        // Buscar el usuario por ID
+        $usuario = Usuario::find($id);
+
+        // Verificar si el usuario existe
+        if (!$usuario) {
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
+
+        // Devolver los datos del usuario
+        return response()->json($usuario, 200);
+    }
+
     public function update(Request $request)
     {
         // Validaciones
