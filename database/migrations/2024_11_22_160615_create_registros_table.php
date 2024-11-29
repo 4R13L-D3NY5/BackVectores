@@ -21,6 +21,8 @@ return new class extends Migration
             $table->text('descripcionRegistro')->nullable();
             $table->text('descripcionLaboratorio')->nullable();
             $table->boolean('resultado')->nullable();
+            $table->boolean('huevos')->nullable();
+            
 
             $table->unsignedBigInteger('especie_id');
             $table->foreign('especie_id')->references('id')->on('especies');

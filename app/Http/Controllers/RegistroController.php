@@ -63,6 +63,7 @@ class RegistroController extends Controller
         $validatedData = $request->validate([
             'descripcionLaboratorio' => 'nullable|string',
             'resultado' => 'nullable|boolean',
+            'huevos' => 'nullable|boolean',
         ]);
     
         // Buscar el registro por código
